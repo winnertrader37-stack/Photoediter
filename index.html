@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#080914"
+    >
+
+    <meta
+        name="description"
+        content="NAOL AI PHOTO STUDIO - Free cinematic photo editing, sharpening, color grading and image enhancement."
+    >
+
+    <title>NAOL AI PHOTO STUDIO | Free Photo Editor</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- BACKGROUND EFFECTS -->
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+    <div class="background-grid"></div>
+
+    <!-- NAVIGATION -->
+    <header class="navbar">
+
+        <a href="#" class="brand">
+
+            <div class="brand-logo">
+                <span>N</span>
+                <div class="logo-orbit"></div>
+            </div>
+
+            <div class="brand-text">
+                <h1>NAOL</h1>
+                <p>AI PHOTO STUDIO</p>
+            </div>
+
+        </a>
+
+        <div class="nav-right">
+
+            <span class="free-badge">
+                <span class="status-dot"></span>
+                FREE EDITOR
+            </span>
+
+            <button
+                class="icon-button"
+                id="themeButton"
+                type="button"
+                aria-label="Toggle interface theme"
+                title="Toggle theme"
+            >
+                ◐
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-container">
+
+        <!-- HERO -->
+        <section class="hero-section">
+
+            <div class="hero-badge">
+                <span class="sparkle">✦</span>
+                PROFESSIONAL PHOTO ENHANCEMENT
+            </div>
+
+            <h2 class="hero-title">
+                Make Every Photo
+                <span class="gradient-text">Cinematic.</span>
+            </h2>
+
+            <p class="hero-description">
+                Transform ordinary photos into stunning images.
+                Sharpen details, enhance colors and create your
+                own cinematic style in seconds.
+            </p>
+
+            <div class="hero-features">
+
+                <span>✦ One-Click Enhance</span>
+
+                <span>✦ Cinematic Colors</span>
+
+                <span>✦ No API Key</span>
+
+            </div>
+
+        </section>
+
+
+        <!-- EDITOR -->
+        <section class="editor-section">
+
+            <div class="editor-heading">
+
+                <div>
+                    <span class="section-label">YOUR WORKSPACE</span>
+
+                    <h3>Photo Editor</h3>
+
+                    <p>
+                        Upload an image or capture a new photo.
+                    </p>
+                </div>
+
+                <div class="editor-status">
+                    <span class="status-dot"></span>
+                    READY
+                </div>
+
+            </div>
+
+
+            <!-- UPLOAD AREA -->
+            <div
+                class="upload-area"
+                id="uploadArea"
+                tabindex="0"
+                role="button"
+                aria-label="Upload a photo"
+            >
+
+                <div class="upload-content" id="uploadContent">
+
+                    <div class="upload-icon">
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="38"
+                            height="38"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.6"
+                        >
+                            <rect
+                                x="3"
+                                y="3"
+                                width="18"
+                                height="18"
+                                rx="4"
+                            />
+
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+
+                            <path
+                                d="m21 15-5-5L5 21"
+                            />
+
+                            <path
+                                d="M12 3v6m-3-3 3-3 3 3"
+                                transform="translate(0 0)"
+                            />
+                        </svg>
+                    </div>
+
+                    <h4>Drop Your Photo Here</h4>
+
+                    <p>
+                        Drag and drop your image, or select
+                        a photo from your device.
+                    </p>
+
+                    <div class="upload-buttons">
+
+                        <button
+                            class="primary-button"
+                            id="uploadButton"
+                            type="button"
+                        >
+                            <span>＋</span>
+                            Upload Photo
+                        </button>
+
+                        <button
+                            class="secondary-button"
+                            id="cameraButton"
+                            type="button"
+                        >
+                            <span>◎</span>
+                            Open Camera
+                        </button>
+
+                    </div>
+
+                    <p class="supported-formats">
+                        JPG · JPEG · PNG · WEBP
+                    </p>
+
+                    <p class="privacy-note">
+                        🔒 Your photo stays on your device.
+                    </p>
+
+                </div>
+
+                <!-- IMAGE PREVIEW -->
+                <div
+                    class="image-workspace hidden"
+                    id="imageWorkspace"
+                >
+
+                    <div class="image-topbar">
+
+                        <span class="image-file-name" id="fileName">
+                            image.jpg
+                        </span>
+
+                        <button
+                            class="small-button"
+                            id="changePhotoButton"
+                            type="button"
+                        >
+                            Change Photo
+                        </button>
+
+                    </div>
+
+                    <div class="image-preview-container">
+
+                        <div
+                            class="preview-loading hidden"
+                            id="previewLoading"
+                        >
+                            <div class="spinner"></div>
+                            <span>Processing image...</span>
+                        </div>
+
+                        <canvas
+                            id="photoCanvas"
+                            aria-label="Edited photo preview"
+                        ></canvas>
+
+                        <div
+                            class="image-placeholder hidden"
+                            id="imagePlaceholder"
+                        >
+                            Your photo preview will appear here.
+                        </div>
+
+                    </div>
+
+                    <div class="image-information">
+
+                        <span id="imageDimensions">
+                            Image dimensions
+                        </span>
+
+                        <span id="imageSize">
+                            File size
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- HIDDEN FILE INPUTS -->
+            <input
+                type="file"
+                id="fileInput"
+                accept="image/jpeg,image/png,image/webp"
+                hidden
+            >
+
+            <input
+                type="file"
+                id="cameraInput"
+                accept="image/*"
+                capture="environment"
+                hidden
+            >
+
+
+            <!-- CAMERA LIVE VIEW -->
+            <div
+                class="camera-panel hidden"
+                id="cameraPanel"
+            >
+
+                <div class="camera-heading">
+                    <h4>Camera Studio</h4>
+
+                    <button
+                        class="icon-button"
+                        id="closeCameraButton"
+                        type="button"
+                        aria-label="Close camera"
+                    >
+                        ✕
+                    </button>
+                </div>
+
+                <video
+                    id="cameraVideo"
+                    autoplay
+                    playsinline
+                    muted
+                ></video>
+
+                <div class="camera-controls">
+
+                    <button
+                        class="primary-button"
+                        id="captureButton"
+                        type="button"
+                    >
+                        ◎ Capture Photo
+                    </button>
+
+                    <button
+                        class="secondary-button"
+                        id="switchCameraButton"
+                        type="button"
+                    >
+                        ⇄ Switch Camera
+                    </button>
+
+                </div>
+
+                <p class="camera-message" id="cameraMessage">
+                    Allow camera access when your browser asks.
+                </p>
+
+            </div>
+
+
+            <!-- EDITING CONTROLS -->
+            <div class="editing-panel" id="editingPanel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <span class="section-label">IMAGE CONTROLS</span>
+                        <h3>Enhance Your Photo</h3>
+                    </div>
+
+                    <span class="control-tag">
+                        NO API REQUIRED
+                    </span>
+
+                </div>
+
+
+                <!-- QUICK ACTIONS -->
+                <div class="quick-actions">
+
+                    <button
+                        class="action-card action-auto"
+                        id="autoEnhanceButton"
+                        type="button"
+                        disabled
+                    >
+
+                        <span class="action-icon">✦</span>
+
+                        <span class="action-title">
+                            Auto Enhance
+                        </span>
+
+                        <span class="action-description">
+                            One-click improvement
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="action-card"
+                        id="sharpenButton"
+                        type="button"
+                        disabled
+                    >
+
+                        <span class="action-icon">◇</span>
+
+                        <span class="action-title">
+                            Ultra Sharp
+                        </span>
+
+                        <span class="action-description">
+                            Enhance fine details
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="action-card"
+                        id="cinematicButton"
+                        type="button"
+                        disabled
+                    >
+
+                        <span class="action-icon">◈</span>
+
+                        <span class="action-title">
+                            Cinematic
+                        </span>
+
+                        <span class="action-description">
+                            Professional color style
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="action-card"
+                        id="resetButton"
+                        type="button"
+                        disabled
+                    >
+
+                        <span class="action-icon">↺</span>
+
+                        <span class="action-title">
+                            Reset Image
+                        </span>
+
+                        <span class="action-description">
+                            Restore original photo
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+                <!-- PRESETS -->
+                <div class="preset-section">
+
+                    <div class="subsection-heading">
+
+                        <h4>Cinematic Presets</h4>
+
+                        <span>Choose your style</span>
+
+                    </div>
+
+                    <div class="preset-grid">
+
+                        <button
+                            class="preset-button"
+                            data-preset="cinematic"
+                            type="button"
+                            disabled
+                        >
+                            <span class="preset-preview preset-cinematic">
+                                ◈
+                            </span>
+                            <span>Cinematic Pro</span>
+                        </button>
+
+
+                        <button
+                            class="preset-button"
+                            data-preset="portrait"
+                            type="button"
+                            disabled
+                        >
+                            <span class="preset-preview preset-portrait">
+                                ◉
+                            </span>
+                            <span>Portrait Pro</span>
+                        </button>
+
+
+                        <button
+                            class="preset-button"
+                            data-preset="natural"
+                            type="button"
+                            disabled
+                        >
+                            <span class="preset-preview preset-natural">
+                                ❋
+                            </span>
+                            <span>Natural Beauty</span>
+                        </button>
+
+
+                        <button
+                            class="preset-button"
+                            data-preset="dark"
+                            type="button"
+                            disabled
+                        >
+                            <span class="preset-preview preset-dark">
+                                ◐
+                            </span>
+                            <span>Dark Cinematic</span>
+                        </button>
+
+
+                        <button
+                            class="preset-button"
+                            data-preset="vibrant"
+                            type="button"
+                            disabled
+                        >
+                            <span class="preset-preview preset-vibrant">
+                                ✺
+                            </span>
+                            <span>Vibrant Color</span>
+                        </button>
+
+
+                        <button
+                            class="preset-button"
+                            data-preset="warm"
+                            type="button"
+                            disabled
+                        >
+                            <span class="preset-preview preset-warm">
+                                ☼
+                            </span>
+                            <span>Warm Film</span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MANUAL ADJUSTMENTS -->
+                <div class="adjustment-section">
+
+                    <div class="subsection-heading">
+
+                        <h4>Manual Adjustments</h4>
+
+                        <button
+                            class="text-button"
+                            id="resetAdjustmentsButton"
+                            type="button"
+                            disabled
+                        >
+                            Reset Adjustments
+                        </button>
+
+                    </div>
+
+
+                    <div class="slider-control">
+
+                        <div class="slider-label">
+                            <label for="brightnessSlider">
+                                ☀ Brightness
+                            </label>
+
+                            <output id="brightnessValue">
+                                0
+                            </output>
+                        </div>
+
+                        <input
+                            type="range"
+                            id="brightnessSlider"
+                            min="-100"
+                            max="100"
+                            value="0"
+                            disabled
+                        >
+
+                    </div>
+
+
+                    <div class="slider-control">
+
+                        <div class="slider-label">
+                            <label for="contrastSlider">
+                                ◐ Contrast
+                            </label>
+
+                            <output id="contrastValue">
+                                0
+                            </output>
+                        </div>
+
+                        <input
+                            type="range"
+                            id="contrastSlider"
+                            min="-100"
+                            max="100"
+                            value="0"
+                            disabled
+                        >
+
+                    </div>
+
+
+                    <div class="slider-control">
+
+                        <div class="slider-label">
+                            <label for="saturationSlider">
+                                ✿ Saturation
+                            </label>
+
+                            <output id="saturationValue">
+                                0
+                            </output>
+                        </div>
+
+                        <input
+                            type="range"
+                            id="saturationSlider"
+                            min="-100"
+                            max="100"
+                            value="0"
+                            disabled
+                        >
+
+                    </div>
+
+
+                    <div class="slider-control">
+
+                        <div class="slider-label">
+                            <label for="sharpnessSlider">
+                                ✧ Sharpness
+                            </label>
+
+                            <output id="sharpnessValue">
+                                0
+                            </output>
+                        </div>
+
+                        <input
+                            type="range"
+                            id="sharpnessSlider"
+                            min="0"
+                            max="100"
+                            value="0"
+                            disabled
+                        >
+
+                    </div>
+
+
+                    <div class="slider-control">
+
+                        <div class="slider-label">
+                            <label for="warmthSlider">
+                                ♨ Warmth
+                            </label>
+
+                            <output id="warmthValue">
+                                0
+                            </output>
+                        </div>
+
+                        <input
+                            type="range"
+                            id="warmthSlider"
+                            min="-100"
+                            max="100"
+                            value="0"
+                            disabled
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- BEFORE / AFTER -->
+                <div class="comparison-section">
+
+                    <div class="subsection-heading">
+
+                        <h4>Before / After</h4>
+
+                        <span>Compare your result</span>
+
+                    </div>
+
+                    <div class="comparison-control">
+
+                        <label for="comparisonSlider">
+                            Original / Edited
+                        </label>
+
+                        <input
+                            type="range"
+                            id="comparisonSlider"
+                            min="0"
+                            max="100"
+                            value="100"
+                            disabled
+                        >
+
+                        <div class="comparison-labels">
+                            <span>ORIGINAL</span>
+                            <span>EDITED</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DOWNLOAD SETTINGS -->
+                <div class="download-section">
+
+                    <div class="download-info">
+
+                        <span class="download-icon">↓</span>
+
+                        <div>
+                            <h4>Your Photo Is Ready</h4>
+
+                            <p>
+                                Export your edited image to your device.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="download-controls">
+
+                        <label for="exportFormat">
+                            Format
+                        </label>
+
+                        <select id="exportFormat" disabled>
+
+                            <option value="image/jpeg">
+                                JPG
+                            </option>
+
+                            <option value="image/png">
+                                PNG
+                            </option>
+
+                            <option value="image/webp">
+                                WEBP
+                            </option>
+
+                        </select>
+
+
+                        <label for="exportQuality">
+                            Quality
+                        </label>
+
+                        <select id="exportQuality" disabled>
+
+                            <option value="0.95">
+                                High — 95%
+                            </option>
+
+                            <option value="1">
+                                Maximum — 100%
+                            </option>
+
+                            <option value="0.85">
+                                Balanced — 85%
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                        class="download-button"
+                        id="downloadButton"
+                        type="button"
+                        disabled
+                    >
+
+                        <span>↓</span>
+
+                        Download Edited Photo
+
+                    </button>
+
+                    <p class="download-note">
+                        Export quality does not create new image detail.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROGRESS / STATUS -->
+        <section
+            class="processing-panel hidden"
+            id="processingPanel"
+            aria-live="polite"
+        >
+
+            <div class="processing-header">
+
+                <div class="spinner"></div>
+
+                <div>
+                    <h3 id="processingTitle">
+                        Enhancing your photo...
+                    </h3>
+
+                    <p id="processingMessage">
+                        Preparing your image.
+                    </p>
+                </div>
+
+                <span id="processingPercent">0%</span>
+
+            </div>
+
+            <div class="progress-track">
+                <div
+                    class="progress-bar"
+                    id="progressBar"
+                ></div>
+            </div>
+
+        </section>
+
+
+        <!-- NOTIFICATION -->
+        <div
+            class="toast hidden"
+            id="toast"
+            role="status"
+            aria-live="polite"
+        ></div>
+
+
+        <!-- FEATURES -->
+        <section class="features-section">
+
+            <div class="features-heading">
+
+                <span class="section-label">
+                    BUILT FOR CREATORS
+                </span>
+
+                <h2>
+                    Everything You Need.
+                    <span class="gradient-text">
+                        No Subscription.
+                    </span>
+                </h2>
+
+            </div>
+
+
+            <div class="features-grid">
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">⚡</div>
+
+                    <h3>Fast Editing</h3>
+
+                    <p>
+                        Apply image adjustments directly in your
+                        browser without uploading your photo
+                        to an editing server.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">◇</div>
+
+                    <h3>Detailed Sharpening</h3>
+
+                    <p>
+                        Improve the appearance of edges and
+                        fine details with adjustable sharpening.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">◈</div>
+
+                    <h3>Cinematic Looks</h3>
+
+                    <p>
+                        Explore color presets for portraits,
+                        cinematic images and creative projects.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">🔒</div>
+
+                    <h3>Privacy First</h3>
+
+                    <p>
+                        Image processing runs locally in your
+                        browser. No API key is required.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+
+        <a href="#" class="footer-brand">
+            NAOL <span>AI PHOTO STUDIO</span>
+        </a>
+
+        <p>
+            Create beautifully. Edit freely.
+        </p>
+
+        <p class="copyright">
+            © <span id="currentYear"></span>
+            NAOL AI PHOTO STUDIO.
+            All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
+
+</body>
+</html>
